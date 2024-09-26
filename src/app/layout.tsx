@@ -12,7 +12,11 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${poppins.className}`}>
-      <body>{children}</body>
+      <body>
+        <main className="flex flex-col min-h-[calc(100vh-3.5rem-1px]">
+          <div className="flex-l flex flex-col h-full">{children}</div>
+          </main>
+        </body>
     </html>
   );
 }

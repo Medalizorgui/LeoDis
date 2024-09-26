@@ -1,14 +1,11 @@
 "use client";
 
-import { useWixClient } from "@/hooks/useWixClient";
-import { LoginState } from "@wix/sdk";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const RegisterPage = () => {
-  const wixClient = useWixClient();
   const router = useRouter();
 
   const [username, setUsername] = useState("");
@@ -29,43 +26,43 @@ const RegisterPage = () => {
     setError("");
     setMessage("");
 
-    try {
-      const response = await wixClient.auth.register({
-        email,
-        password,
-        captchaTokens: { invisibleRecaptchaToken: captchaToken || "" },
-        profile: { nickname: username },
-      });
+  //   try {
+  //     const response = await wixClient.auth.register({
+  //       email,
+  //       password,
+  //       captchaTokens: { invisibleRecaptchaToken: captchaToken || "" },
+  //       profile: { nickname: username },
+  //     });
 
-      if (response?.loginState === LoginState.SUCCESS) {
-        setMessage("Registration successful! Logging you in...");
-        const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
-          response.data.sessionToken!
-        );
+  //     if (response?.loginState === LoginState.SUCCESS) {
+  //       setMessage("Registration successful! Logging you in...");
+  //       const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
+  //         response.data.sessionToken!
+  //       );
 
-        Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
-          expires: 2,
-        });
-        wixClient.auth.setTokens(tokens);
-        router.push("/");
-      } else if (response?.loginState === LoginState.EMAIL_VERIFICATION_REQUIRED) {
-        setMessage("Please verify your email address.");
-        router.push("/email-verification");
-      } else {
-        throw new Error("Registration failed. Please try again.");
-      }
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error("An error occurred:", err.message);
-        setError(err.message || "Something went wrong!");
-      } else {
-        console.error("An unexpected error occurred:", err);
-        setError("An unexpected error occurred. Please try again.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //       Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
+  //         expires: 2,
+  //       });
+  //       wixClient.auth.setTokens(tokens);
+  //       router.push("/");
+  //     } else if (response?.loginState === LoginState.EMAIL_VERIFICATION_REQUIRED) {
+  //       setMessage("Please verify your email address.");
+  //       router.push("/email-verification");
+  //     } else {
+  //       throw new Error("Registration failed. Please try again.");
+  //     }
+  //   } catch (err) {
+  //     if (err instanceof Error) {
+  //       console.error("An error occurred:", err.message);
+  //       setError(err.message || "Something went wrong!");
+  //     } else {
+  //       console.error("An unexpected error occurred:", err);
+  //       setError("An unexpected error occurred. Please try again.");
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="h-[calc(100vh-80px)] px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64 flex items-center justify-center">
@@ -125,4 +122,3 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
-

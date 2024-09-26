@@ -1,6 +1,6 @@
 import React from "react";
 import ProductsTable from "./_components/data-table";
-import { PrismaClient, Products } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const db = new PrismaClient();
 

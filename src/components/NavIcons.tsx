@@ -5,7 +5,6 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import CartModel from "./CartModel"
-import { useWixClient } from "@/hooks/useWixClient"
 
 const NavIcons = () => {
   const [isProfileOpen, setProfileOpen] = useState(false);
@@ -19,14 +18,6 @@ const NavIcons = () => {
     }
     setProfileOpen((prev) => !prev);
 
-    const wixClient = useWixClient();
-    const login = () => {
-      const loginRequestData = wixClient.auth.generateOAuthData(
-        'https://localhost:3000'
-      );
-
-      console.log(loginRequestData);
-    }
 
 
 
